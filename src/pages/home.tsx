@@ -1,3 +1,5 @@
+// import NewsSlider from "../components/news-slider/news-slider";
+import NewsSlider from "../components/news-slider/news-slider";
 import styles from "./home.module.scss";
 
 export default function Home() {
@@ -14,7 +16,8 @@ export default function Home() {
         </p>
       </div>
 
-      <h2>News</h2>
+      <h2 className={styles.title}>News</h2>
+      <NewsSlider />
     </div>
   );
 }

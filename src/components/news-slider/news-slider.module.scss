@@ -1,0 +1,37 @@
+.slider {
+  width: 100%;
+  aspect-ratio: 1;
+
+  @media screen and (min-width: 576px) and (max-width: 992px) {
+    aspect-ratio: 4/3;
+  }
+  @media screen and (min-width: 992px) {
+    aspect-ratio: 16/9;
+  }
+}
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+.swiperSlide {
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.newsCard {
+  border-radius: 1rem;
+  padding: 2rem;
+  color: white;
+  text-shadow: 1px 1px 1px black, 2px 2px 4px black;
+
+  background-size: cover;
+  background-position: center;
+
+  height: 100%;
+  width: 100%;
+}
+.title {
+  margin-bottom: 0.5rem;
+}
