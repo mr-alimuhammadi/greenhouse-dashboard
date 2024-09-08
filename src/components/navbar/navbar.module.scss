@@ -1,0 +1,38 @@
+.navbar {
+  background-color: $primary;
+  padding: 1rem;
+  color: $light;
+
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  .sideNavbarButton {
+    @include button(transparent, $light, 0);
+    i {
+      font-size: 1.5rem;
+    }
+    display: none;
+
+    @media screen and (max-width: 576px) {
+      display: inline;
+    }
+  }
+
+  .brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    @media screen and (max-width: 576px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .navLink {
+    &:hover {
+      text-decoration: underline;
+    }
+    @media screen and (max-width: 576px) {
+      display: none;
+    }
+  }
+}

@@ -1,7 +1,20 @@
+import styles from "./home.module.scss";
+
 export default function Home() {
   return (
     <div>
-      <h1>hello world</h1>
+      <div className={styles.head}>
+        <h1 className={styles.title}>Greenhouse Monitoring System</h1>
+        <p className={styles.subtitle}>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim nostrum
+          veritatis sequi accusamus nulla ab ullam velit pariatur quam laborum
+          fugiat doloribus dicta deleniti, a quaerat repellat reprehenderit
+          magnam incidunt omnis minima quas debitis vero mollitia. Quo autem
+          aspernatur accusantium!
+        </p>
+      </div>
+
+      <h2>News</h2>
     </div>
   );
 }

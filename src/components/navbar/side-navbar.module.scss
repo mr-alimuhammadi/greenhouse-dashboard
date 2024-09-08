@@ -1,0 +1,39 @@
+.sideNavbarContainer {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  left: -100%;
+  display: flex;
+  transition: left 350ms ease;
+
+  &.visible {
+    left: 0;
+  }
+}
+.sideNavbar {
+  width: 300px;
+  padding: 2rem 1rem;
+  background-color: rgba($primary, 0.8);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  color: $light;
+
+  .brand {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  ul {
+    margin-top: 2rem;
+    list-style-type: none;
+    li {
+      margin: 1rem 0.5rem;
+    }
+  }
+}
+.emptyArea {
+  flex-grow: 1;
+}
