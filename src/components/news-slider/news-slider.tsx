@@ -3,17 +3,21 @@ import { SwiperSlide, Swiper } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
+import classNames from "../../utils/classnames";
 
-export default function NewsSlider() {
+interface Props {
+  className: string;
+}
+export default function NewsSlider(props: Props) {
   return (
-    <div className={styles.slider}>
+    <div {...classNames(styles.slider, props.className)}>
       <Swiper
         className={styles.swiper}
         slidesPerView={1}
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
-          delay: 2500,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         pagination={{
