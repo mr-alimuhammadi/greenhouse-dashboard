@@ -96,14 +96,14 @@ export default function TemperatureAndHumidityChart(props: Props) {
             dataKey="temperature"
             stroke="#dc3545"
             name="temperature"
-            dot={<span></span>}
+            dot={false}
           />
           <Line
             type="monotone"
             dataKey="humidity"
             stroke="#8884d8"
             name="humidity"
-            dot={<span></span>}
+            dot={false}
           />
         </LineChart>
       </ResponsiveContainer>
