@@ -83,3 +83,31 @@
     font-size: 1rem;
   }
 }
+.avrageSelection {
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+
+  span {
+    text-wrap: nowrap;
+  }
+}
+.radios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $primary;
+
+  input,
+  label {
+    cursor: pointer;
+  }
+}

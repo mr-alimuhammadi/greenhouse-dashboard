@@ -2,6 +2,7 @@ import { format, subDays, subMonths, subYears } from "date-fns";
 import styles from "./filter-box.module.scss";
 import { Dispatch, SetStateAction } from "react";
 import { DeviceData } from "../../types/device-data";
+import { AvrageMode } from "../../types/avrage-mode";
 
 interface Props {
   devicesData: DeviceData[];
@@ -11,6 +12,8 @@ interface Props {
   setFromDateTime: Dispatch<SetStateAction<Date>>;
   toDateTime: Date;
   setToDateTime: Dispatch<SetStateAction<Date>>;
+  avrageMode: AvrageMode;
+  setAvrageMode: Dispatch<SetStateAction<AvrageMode>>;
 }
 export default function FilterBox(props: Props) {
   return (
@@ -121,6 +124,85 @@ export default function FilterBox(props: Props) {
               }
             }}
           />
+        </div>
+      </div>
+      <div className={styles.avrageSelection}>
+        <span>Average for</span>
+        <div className={styles.radios}>
+          <div className={styles.radio}>
+            <input
+              type="radio"
+              name="avrage"
+              id="month"
+              checked={props.avrageMode === "month"}
+              onChange={(e) => {
+                if (e.currentTarget.value === "on")
+                  props.setAvrageMode("month");
+              }}
+            />
+            <label htmlFor="month">every month</label>
+          </div>
+          <div className={styles.radio}>
+            <input
+              type="radio"
+              name="avrage"
+              id="week"
+              checked={props.avrageMode === "week"}
+              onChange={(e) => {
+                if (e.currentTarget.value === "on") props.setAvrageMode("week");
+              }}
+            />
+            <label htmlFor="week">every week</label>
+          </div>
+          <div className={styles.radio}>
+            <input
+              type="radio"
+              name="avrage"
+              id="day"
+              checked={props.avrageMode === "day"}
+              onChange={(e) => {
+                if (e.currentTarget.value === "on") props.setAvrageMode("day");
+              }}
+            />
+            <label htmlFor="day">every day</label>
+          </div>
+          <div className={styles.radio}>
+            <input
+              type="radio"
+              name="avrage"
+              id="six-hours"
+              checked={props.avrageMode === "six-hours"}
+              onChange={(e) => {
+                if (e.currentTarget.value === "on")
+                  props.setAvrageMode("six-hours");
+              }}
+            />
+            <label htmlFor="six-hours">every six-hours</label>
+          </div>
+          <div className={styles.radio}>
+            <input
+              type="radio"
+              name="avrage"
+              id="hour"
+              checked={props.avrageMode === "hour"}
+              onChange={(e) => {
+                if (e.currentTarget.value === "on") props.setAvrageMode("hour");
+              }}
+            />
+            <label htmlFor="hour">every hour</label>
+          </div>
+          <div className={styles.radio}>
+            <input
+              type="radio"
+              name="avrage"
+              id="none"
+              checked={props.avrageMode === "none"}
+              onChange={(e) => {
+                if (e.currentTarget.value === "on") props.setAvrageMode("none");
+              }}
+            />
+            <label htmlFor="none">no averaging</label>
+          </div>
         </div>
       </div>
     </div>

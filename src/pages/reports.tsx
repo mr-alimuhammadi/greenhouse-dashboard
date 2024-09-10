@@ -5,17 +5,18 @@ import { DeviceData } from "../types/device-data";
 import styles from "./reports.module.scss";
 import { subMonths } from "date-fns";
 import extractChartData from "../utils/extract-chart-data";
+import { AvrageMode } from "../types/avrage-mode";
 
 interface Props {
   devicesData: DeviceData[];
 }
 export default function Reports(props: Props) {
   const [deviceId, setDeviceId] = useState(-1);
-
   const today = new Date();
   const aMonthAgo = subMonths(today, 1);
   const [fromDateTime, setFromDateTime] = useState(aMonthAgo);
   const [toDateTime, setToDateTime] = useState(today);
+  const [avrageMode, setAvrageMode] = useState<AvrageMode>("none");
 
   return (
     <div className={styles.reports}>
@@ -39,6 +40,8 @@ export default function Reports(props: Props) {
         setFromDateTime={setFromDateTime}
         toDateTime={toDateTime}
         setToDateTime={setToDateTime}
+        avrageMode={avrageMode}
+        setAvrageMode={setAvrageMode}
       />
       <h2>Termperature and Humidty measures</h2>
       <TemperatureAndHumidityChart
@@ -46,7 +49,8 @@ export default function Reports(props: Props) {
           props.devicesData.find((d) => d.deviceId === deviceId)?.deviceData ??
             [],
           fromDateTime,
-          toDateTime
+          toDateTime,
+          avrageMode
         )}
       />
     </div>
