@@ -1,0 +1,85 @@
+.filterBox {
+  margin-bottom: 2rem;
+}
+
+.deviceSelection {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+
+  select {
+    flex-grow: 1;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    color: $primary;
+    border: 1px solid $primary;
+    font-size: 1rem;
+    outline-color: $primary;
+  }
+}
+.filterButtons {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+
+  div {
+    flex-grow: 1;
+    display: flex;
+    gap: 0.5rem;
+
+    @media screen and (max-width: 576px) {
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+
+  button {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    color: $primary;
+    background-color: transparent;
+    border: 1px solid $primary;
+    text-transform: uppercase;
+    padding: 0.5rem;
+    border-radius: 2rem;
+
+    &:hover {
+      background-color: $primary;
+      color: $light;
+    }
+    &:active {
+      filter: brightness(0.8);
+    }
+  }
+}
+
+.datetime {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+.dateSelection,
+.timeSelection {
+  flex-grow: 1;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+  }
+
+  input {
+    flex-grow: 1;
+    padding: 0.4rem;
+    border: 1px solid $primary;
+    border-radius: 0.5rem;
+    color: $primary;
+    outline-color: $primary;
+    font-size: 1rem;
+  }
+}

@@ -12,9 +12,10 @@ import {
 } from "recharts";
 import useBypassRechartsErorr from "../../hooks/use-bypass-recharts-erorr";
 import { useState } from "react";
+import { ChartData } from "../../types/chart-data";
 
 interface Props {
-  data: { datetime: string; temperature: number; humidity: number }[];
+  data: ChartData[];
 }
 export default function TemperatureAndHumidityChart(props: Props) {
   const [reverse, setReverse] = useState(true);
@@ -95,12 +96,14 @@ export default function TemperatureAndHumidityChart(props: Props) {
             dataKey="temperature"
             stroke="#dc3545"
             name="temperature"
+            dot={<span></span>}
           />
           <Line
             type="monotone"
             dataKey="humidity"
             stroke="#8884d8"
             name="humidity"
+            dot={<span></span>}
           />
         </LineChart>
       </ResponsiveContainer>

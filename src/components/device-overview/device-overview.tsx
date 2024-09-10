@@ -2,11 +2,12 @@ import { useState } from "react";
 import CollapseBox from "../collapse-box/collapse-box";
 import styles from "./device-overivew.module.scss";
 import TemperatureAndHumidityChart from "../temperature-and-humidity-chart/temperature-and-humidity-chart";
+import { ChartData } from "../../types/chart-data";
 
 interface Props {
   deviceName: string;
   deviceZone: string;
-  deviceData: { datetime: string; temperature: number; humidity: number }[];
+  deviceData: ChartData[];
 }
 export default function DeviceOverview(props: Props) {
   const [collapse, setCollapse] = useState(true);
