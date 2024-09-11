@@ -27,7 +27,7 @@ export default function FilterBox(props: Props) {
   return (
     <div className={styles.filterBox}>
       <div className={styles.deviceSelection}>
-        <label htmlFor="device-select">Device:</label>
+        <label htmlFor="device-select">دستگاه:</label>
         <select
           id="device-select"
           value={deviceId}
@@ -35,10 +35,10 @@ export default function FilterBox(props: Props) {
         >
           <option value={-1}>
             {props.devicesInfoStatus === "succeeded"
-              ? "select a device"
+              ? "انتخاب دستگاه"
               : props.devicesInfoStatus === "loading"
-              ? "loading devices"
-              : "faild loading devices!"}
+              ? "بارگیری دستگاه ها..."
+              : "در بارگیری داده ها اشکالی پیش امده!"}
           </option>
           {props.devicesData.map((device, index) => (
             <option value={device.deviceId} key={index}>
@@ -48,26 +48,26 @@ export default function FilterBox(props: Props) {
         </select>
       </div>
       <div className={styles.filterButtons}>
-        <span>Filter records by</span>
+        <span>فیلتر کردن بر اساس</span>
         <div>
           <button type="button" onClick={filterByLastDay}>
-            last day
+            آخرین روز
           </button>
           <button type="button" onClick={filterByLastWeek}>
-            last week
+            آخرین هفته
           </button>
           <button type="button" onClick={filterByLastMonth}>
-            last month
+            اخرین ماه
           </button>
           <button type="button" onClick={filterByLastYear}>
-            last year
+            اخرین سال
           </button>
         </div>
       </div>
       <div className={styles.datetime}>
-        <span>From</span>
+        <span>از</span>
         <div className={styles.dateSelection}>
-          <label htmlFor="fromDate">date:</label>
+          <label htmlFor="fromDate">تاریخ:</label>
           <input
             type="date"
             id="fromDate"
@@ -76,7 +76,7 @@ export default function FilterBox(props: Props) {
           />
         </div>
         <div className={styles.timeSelection}>
-          <label htmlFor="fromTime">time:</label>
+          <label htmlFor="fromTime">زمان:</label>
           <input
             type="time"
             id="fromTime"
@@ -86,9 +86,9 @@ export default function FilterBox(props: Props) {
         </div>
       </div>
       <div className={styles.datetime}>
-        <span>To</span>
+        <span>تا</span>
         <div className={styles.dateSelection}>
-          <label htmlFor="toDate">date:</label>
+          <label htmlFor="toDate">تاریخ:</label>
           <input
             type="date"
             id="toDate"
@@ -97,7 +97,7 @@ export default function FilterBox(props: Props) {
           />
         </div>
         <div className={styles.timeSelection}>
-          <label htmlFor="toTime">time:</label>
+          <label htmlFor="toTime">زمان:</label>
           <input
             type="time"
             id="toTime"
@@ -107,7 +107,7 @@ export default function FilterBox(props: Props) {
         </div>
       </div>
       <div className={styles.avrageSelection}>
-        <span>Average for</span>
+        <span>میانگین به ازای</span>
         <div className={styles.radios}>
           <div className={styles.radio}>
             <input
@@ -117,7 +117,7 @@ export default function FilterBox(props: Props) {
               checked={avrageMode === "month"}
               onChange={(e) => handleAvrageModeChange(e, "month")}
             />
-            <label htmlFor="month">every month</label>
+            <label htmlFor="month">هر ماه</label>
           </div>
           <div className={styles.radio}>
             <input
@@ -127,7 +127,7 @@ export default function FilterBox(props: Props) {
               checked={avrageMode === "week"}
               onChange={(e) => handleAvrageModeChange(e, "week")}
             />
-            <label htmlFor="week">every week</label>
+            <label htmlFor="week">هر هفته</label>
           </div>
           <div className={styles.radio}>
             <input
@@ -137,7 +137,7 @@ export default function FilterBox(props: Props) {
               checked={avrageMode === "day"}
               onChange={(e) => handleAvrageModeChange(e, "day")}
             />
-            <label htmlFor="day">every day</label>
+            <label htmlFor="day">هر روز</label>
           </div>
           <div className={styles.radio}>
             <input
@@ -147,7 +147,7 @@ export default function FilterBox(props: Props) {
               checked={avrageMode === "six-hours"}
               onChange={(e) => handleAvrageModeChange(e, "six-hours")}
             />
-            <label htmlFor="six-hours">every six-hours</label>
+            <label htmlFor="six-hours">هر شش ساعت</label>
           </div>
           <div className={styles.radio}>
             <input
@@ -157,7 +157,7 @@ export default function FilterBox(props: Props) {
               checked={avrageMode === "hour"}
               onChange={(e) => handleAvrageModeChange(e, "hour")}
             />
-            <label htmlFor="hour">every hour</label>
+            <label htmlFor="hour">هر ساعت</label>
           </div>
           <div className={styles.radio}>
             <input
@@ -167,7 +167,7 @@ export default function FilterBox(props: Props) {
               checked={avrageMode === "none"}
               onChange={(e) => handleAvrageModeChange(e, "none")}
             />
-            <label htmlFor="none">no averaging</label>
+            <label htmlFor="none">بدون میانگین</label>
           </div>
         </div>
       </div>

@@ -18,17 +18,16 @@ export default function Reports(props: Props) {
   return (
     <div className={styles.reports}>
       <div className={styles.head}>
-        <h1 className={styles.title}>Reports</h1>
+        <h1 className={styles.title}>گزارشات</h1>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Perferendis
-          amet animi voluptas quis tempora ratione eius sunt, rerum
-          reprehenderit facilis totam consectetur provident vel nulla! Ipsa sed
-          eos ea ab est, illum quae ut natus unde officiis architecto at nam
-          facilis, beatae rem. Consectetur, a incidunt sapiente accusamus
-          voluptatum ab.
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+          استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
+          ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و
+          کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی
+          در شصت و سه
         </p>
       </div>
-      <h2 className={styles.title}>Filter</h2>
+      <h2 className={styles.title}>فیلتر</h2>
       <FilterBox
         devicesData={props.devicesInfo}
         setChartData={setChartData}
@@ -36,16 +35,16 @@ export default function Reports(props: Props) {
         chartDataStatus={chartDataStatus}
         setChartDataStatus={setChartDataStatus}
       />
-      <h2>Termperature and Humidty measures</h2>
+      <h2>میزان دما و رطوبت</h2>
       <LoadingMask
         loading={chartDataStatus !== "succeeded"}
         maskZIndex={10}
         message={
           chartDataStatus === "loading"
-            ? "Loading chart data"
+            ? "بارگیری داده ها نمودار"
             : chartDataStatus === "failed"
-            ? "something went wrong... can not load chart data!"
-            : "Select a device to load chart data"
+            ? "مشکلی در ارتباط پیش امده... نمی توان داده ها را بارگزاری کرد!"
+            : "ابتدا یک دستگاه را انتخاب کنید"
         }
         messageBoxClassName={
           chartDataStatus === "failed"

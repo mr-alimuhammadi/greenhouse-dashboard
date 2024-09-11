@@ -59,7 +59,7 @@ export default function DeviceOverview(props: Props) {
         </button>
       </div>
       <CollapseBox collapse={collapse} className={styles.collapseCard}>
-        <h3>Termperature and Humidty measures</h3>
+        <h3>میزان دما و رطوبت</h3>
         <LoadingMask
           loading={
             chartDataStatus === "loading" || chartDataStatus === "failed"
@@ -67,8 +67,8 @@ export default function DeviceOverview(props: Props) {
           maskZIndex={10}
           message={
             chartDataStatus === "loading"
-              ? "Loading chart data"
-              : "something went wrong... can not load chart data!"
+              ? "بارگیری داده های نمودار"
+              : "مشکلی در ارتباط پیش امد... نمی توان داده ها را بارگیری کرد!"
           }
           messageBoxClassName={
             chartDataStatus === "loading"

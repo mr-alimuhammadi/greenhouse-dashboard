@@ -14,19 +14,21 @@ export default function Home(props: Props) {
   return (
     <div>
       <div className={styles.head}>
-        <h1 className={styles.title}>Greenhouse Monitoring System</h1>
+        <h1 className={styles.title}>سیستم مدیریت گلخونه</h1>
         <p className={styles.subtitle}>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Enim nostrum
-          veritatis sequi accusamus nulla ab ullam velit pariatur quam laborum
-          fugiat doloribus dicta deleniti, a quaerat repellat reprehenderit
-          magnam incidunt omnis minima quas debitis vero mollitia. Quo autem
-          aspernatur accusantium!
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+          استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
+          ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و
+          کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی
+          در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می
+          طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی
+          الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد.
         </p>
       </div>
 
-      <h2 className={styles.title}>News</h2>
+      <h2 className={styles.title}>اخبار</h2>
       <NewsSlider className={styles.newsSlider} />
-      <h2 className={styles.title}>Devices Overview</h2>
+      <h2 className={styles.title}>دستگاه های من</h2>
       {props.devicesInfoStatus === "succeeded" ? (
         props.devicesInfo.map((device, i) => (
           <DeviceOverview
@@ -47,7 +49,8 @@ export default function Home(props: Props) {
         </SkeletonTheme>
       ) : (
         <div className={styles.failed}>
-          something went wrong... can not get devices data!
+          مشکلی در ارتباط پیش امده... نمی توان داده های دستگاه ها را بارگیری
+          کرد!
         </div>
       )}
     </div>

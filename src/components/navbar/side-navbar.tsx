@@ -17,7 +17,7 @@ export default function SideNavbar({
       )}
     >
       <div className={styles.sideNavbar}>
-        <div className={styles.brand}>Greenhouse Dashboard</div>
+        <div className={styles.brand}>داشبورد گلخونه من</div>
         <ul>
           <li>
             <NavLink
@@ -28,7 +28,7 @@ export default function SideNavbar({
                 textDecoration: isActive ? "underline" : "none",
               })}
             >
-              Home
+              صفحه اصلی
             </NavLink>
           </li>
           <li>
@@ -40,7 +40,7 @@ export default function SideNavbar({
                 textDecoration: isActive ? "underline" : "none",
               })}
             >
-              Reports
+              گزارشات
             </NavLink>
           </li>
         </ul>

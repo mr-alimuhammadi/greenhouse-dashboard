@@ -17,7 +17,7 @@ export default function Navbar() {
           <i className="bi bi-list"></i>
         </button>
         <Link to={"/"} className={styles.brand}>
-          Greenhouse Dashboard
+          داشبورد گلخونه من
         </Link>
         <NavLink
           to={"/"}
@@ -26,7 +26,7 @@ export default function Navbar() {
             textDecoration: isActive ? "underline" : "none",
           })}
         >
-          Home
+          صفخه اصلی
         </NavLink>
         <NavLink
           to={"/reports"}
@@ -35,7 +35,7 @@ export default function Navbar() {
             textDecoration: isActive ? "underline" : "none",
           })}
         >
-          Reports
+          گزارشات
         </NavLink>
       </nav>
       <SideNavbar

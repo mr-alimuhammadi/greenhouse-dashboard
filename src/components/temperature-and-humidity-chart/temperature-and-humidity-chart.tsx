@@ -53,7 +53,7 @@ export default function TemperatureAndHumidityChart(props: Props) {
           className={styles.reverseButton}
           onClick={() => setReverse((reverse) => !reverse)}
         >
-          {reverse ? "reverse" : "normal"}
+          {reverse ? "معکوس" : "عادی"}
         </button>
       </div>
       <ResponsiveContainer width={"100%"} aspect={width / height}>
@@ -66,7 +66,7 @@ export default function TemperatureAndHumidityChart(props: Props) {
           <CartesianGrid strokeDasharray="3 3" stroke="#1987543c" />
           <XAxis
             dataKey="datetime"
-            name="time"
+            name="زمان و تاریخ"
             tickMargin={10}
             height={48}
             padding={{ left: 10 }}
@@ -74,13 +74,14 @@ export default function TemperatureAndHumidityChart(props: Props) {
           <YAxis tickMargin={10} domain={[-30, 100]} />
           <Tooltip
             formatter={(value, name) => {
-              if (name === "temperature") return `${value} C`;
-              if (name === "humidity") return `${value}%`;
+              if (name === "دما") return `${value}C`;
+              if (name === "رطوبت") return `%${value}`;
             }}
-            labelFormatter={(lable) => `datetime: ${lable}`}
+            labelFormatter={(lable) => `زمان و تاریخ : ${lable}`}
             contentStyle={{
               backgroundColor: "rgba(255, 255, 255, 0.5)",
               backdropFilter: "blur(2px)",
+              direction: "rtl",
             }}
           />
           <Brush
@@ -95,14 +96,14 @@ export default function TemperatureAndHumidityChart(props: Props) {
             type="monotone"
             dataKey="temperature"
             stroke="#dc3545"
-            name="temperature"
+            name="دما"
             dot={false}
           />
           <Line
             type="monotone"
             dataKey="humidity"
             stroke="#8884d8"
-            name="humidity"
+            name="رطوبت"
             dot={false}
           />
         </LineChart>

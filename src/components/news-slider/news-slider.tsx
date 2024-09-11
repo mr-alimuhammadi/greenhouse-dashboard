@@ -32,11 +32,10 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-1.jpg')",
             }}
           >
-            <h3 className={styles.title}>Greenhouse</h3>
+            <h3 className={styles.title}>گلخانه</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum
-              ullam quas repellendus minima, corporis necessitatibus
-              reprehenderit consequatur enim incidunt quibusdam?
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
             </p>
           </div>
         </SwiperSlide>
@@ -47,10 +46,10 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-1.webp')",
             }}
           >
-            <h3 className={styles.title}>Greenhouse Manager</h3>
+            <h3 className={styles.title}>مدیریت گلخانه</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis
-              exercitationem maiores consectetur soluta blanditiis. Explicabo?
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از طراحان گرافیک است، چاپگرها و
             </p>
           </div>
         </SwiperSlide>
@@ -61,11 +60,11 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-2.jpg')",
             }}
           >
-            <h3 className={styles.title}>Smart Greenhouse</h3>
+            <h3 className={styles.title}>گلخانه هوشمند</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
-              voluptas repudiandae ab expedita temporibus iste. Quis quia eos
-              blanditiis harum ipsam ut nemo nulla minima!
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
+              در ستون و سطرآنچنان که لازم است، و برای شرایط
             </p>
           </div>
         </SwiperSlide>
@@ -76,10 +75,10 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-3.jpg')",
             }}
           >
-            <h3 className={styles.title}>Greenhouse Buildings</h3>
+            <h3 className={styles.title}>ساز و ساخت گلخانه ها</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Exercitationem, ex?
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از
             </p>
           </div>
         </SwiperSlide>
@@ -90,11 +89,11 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-4.jpg')",
             }}
           >
-            <h3 className={styles.title}>Greenhouse Online Management</h3>
+            <h3 className={styles.title}>مدیریت آنلاین گلخانه</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-              doloribus dolorem et tempore nesciunt architecto. Ea ad rerum
-              labore? Fugiat.
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
+              در ستون و سطرآنچنان که لازم است، و برای شرایط
             </p>
           </div>
         </SwiperSlide>
@@ -105,12 +104,11 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-5.jpg')",
             }}
           >
-            <h3 className={styles.title}>Greenhouse Decoration</h3>
+            <h3 className={styles.title}>تزئین گلخانه</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Necessitatibus nemo assumenda inventore. Velit ducimus modi nihil,
-              enim vel quia culpa distinctio dicta, ea minima eos voluptates
-              rem, veniam officiis!
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
+              در ستون و سطرآنچنان که
             </p>
           </div>
         </SwiperSlide>
@@ -121,11 +119,11 @@ export default function NewsSlider(props: Props) {
               backgroundImage: "url('/static/images/greenhouse-6.jpg')",
             }}
           >
-            <h3 className={styles.title}>IoT in Greenhouse</h3>
+            <h3 className={styles.title}>اینترنت اشیاء در گلخانه ها</h3>
             <p className={styles.subtitle}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-              accusamus, numquam in fugit repellat tempora quas, suscipit
-              magnam, odio voluptatibus animi neque adipisci obcaecati possimus!
+              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+              استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
+              در ستون و سطرآنچنان که لازم است، و برای شرایط
             </p>
           </div>
         </SwiperSlide>
