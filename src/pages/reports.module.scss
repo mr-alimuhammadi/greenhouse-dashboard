@@ -5,3 +5,12 @@
 .title {
   margin-bottom: 0.75rem;
 }
+
+.loadingMaskMessageBox {
+  color: $primary;
+  font-size: 1.25rem;
+}
+.errorMaskMessageBox {
+  color: $danger;
+  font-size: 1.25rem;
+}

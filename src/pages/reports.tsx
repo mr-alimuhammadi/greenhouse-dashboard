@@ -1,22 +1,19 @@
 import { useState } from "react";
 import FilterBox from "../components/filter-box/filter-box";
 import TemperatureAndHumidityChart from "../components/temperature-and-humidity-chart/temperature-and-humidity-chart";
-import { DeviceData } from "../types/device-data";
+import { ChartData } from "../types/chart-data";
 import styles from "./reports.module.scss";
-import { subMonths } from "date-fns";
-import extractChartData from "../utils/extract-chart-data";
-import { AvrageMode } from "../types/avrage-mode";
-
+import { DeviceInfo } from "../types/device-info";
+import { Status } from "../types/status";
+import LoadingMask from "../components/loading-mask/loading-mask";
+import { ClipLoader } from "react-spinners";
 interface Props {
-  devicesData: DeviceData[];
+  devicesInfo: DeviceInfo[];
+  devicesInfoStatus: Status;
 }
 export default function Reports(props: Props) {
-  const [deviceId, setDeviceId] = useState(-1);
-  const today = new Date();
-  const aMonthAgo = subMonths(today, 1);
-  const [fromDateTime, setFromDateTime] = useState(aMonthAgo);
-  const [toDateTime, setToDateTime] = useState(today);
-  const [avrageMode, setAvrageMode] = useState<AvrageMode>("none");
+  const [chartData, setChartData] = useState<ChartData[]>([]);
+  const [chartDataStatus, setChartDataStatus] = useState<Status>("idle");
 
   return (
     <div className={styles.reports}>
@@ -33,26 +30,38 @@ export default function Reports(props: Props) {
       </div>
       <h2 className={styles.title}>Filter</h2>
       <FilterBox
-        devicesData={props.devicesData}
-        deviceId={deviceId}
-        setDeviceId={setDeviceId}
-        fromDateTime={fromDateTime}
-        setFromDateTime={setFromDateTime}
-        toDateTime={toDateTime}
-        setToDateTime={setToDateTime}
-        avrageMode={avrageMode}
-        setAvrageMode={setAvrageMode}
+        devicesData={props.devicesInfo}
+        setChartData={setChartData}
+        devicesInfoStatus={props.devicesInfoStatus}
+        chartDataStatus={chartDataStatus}
+        setChartDataStatus={setChartDataStatus}
       />
       <h2>Termperature and Humidty measures</h2>
-      <TemperatureAndHumidityChart
-        data={extractChartData(
-          props.devicesData.find((d) => d.deviceId === deviceId)?.deviceData ??
-            [],
-          fromDateTime,
-          toDateTime,
-          avrageMode
-        )}
-      />
+      <LoadingMask
+        loading={chartDataStatus !== "succeeded"}
+        maskZIndex={10}
+        message={
+          chartDataStatus === "loading"
+            ? "Loading chart data"
+            : chartDataStatus === "failed"
+            ? "something went wrong... can not load chart data!"
+            : "Select a device to load chart data"
+        }
+        messageBoxClassName={
+          chartDataStatus === "failed"
+            ? styles.errorMaskMessageBox
+            : styles.loadingMaskMessageBox
+        }
+        spinner={
+          <ClipLoader
+            color={"#0d6efd"}
+            loading={chartDataStatus === "loading"}
+            size={20}
+          />
+        }
+      >
+        <TemperatureAndHumidityChart data={chartData} />
+      </LoadingMask>
     </div>
   );
 }

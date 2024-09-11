@@ -1,31 +1,45 @@
 import { format, subDays, subMonths, subYears } from "date-fns";
 import styles from "./filter-box.module.scss";
-import { Dispatch, SetStateAction } from "react";
-import { DeviceData } from "../../types/device-data";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { AvrageMode } from "../../types/avrage-mode";
+import axios from "axios";
+import { ChartData } from "../../types/chart-data";
+import { DeviceInfo } from "../../types/device-info";
+import { Status } from "../../types/status";
 
 interface Props {
-  devicesData: DeviceData[];
-  deviceId: number;
-  setDeviceId: Dispatch<SetStateAction<number>>;
-  fromDateTime: Date;
-  setFromDateTime: Dispatch<SetStateAction<Date>>;
-  toDateTime: Date;
-  setToDateTime: Dispatch<SetStateAction<Date>>;
-  avrageMode: AvrageMode;
-  setAvrageMode: Dispatch<SetStateAction<AvrageMode>>;
+  devicesData: DeviceInfo[];
+  setChartData: Dispatch<SetStateAction<ChartData[]>>;
+  devicesInfoStatus: Status;
+  chartDataStatus: Status;
+  setChartDataStatus: Dispatch<SetStateAction<Status>>;
 }
 export default function FilterBox(props: Props) {
+  const [deviceId, setDeviceId] = useState(-1);
+  const today = new Date();
+  const aMonthAgo = subMonths(today, 1);
+  const [fromDate, setFromDate] = useState(format(aMonthAgo, "yyyy-MM-dd"));
+  const [fromTime, setFromTime] = useState(format(aMonthAgo, "HH:mm"));
+  const [toDate, setToDate] = useState(format(today, "yyyy-MM-dd"));
+  const [toTime, setToTime] = useState(format(today, "HH:mm"));
+  const [avrageMode, setAvrageMode] = useState<AvrageMode>("none");
+
   return (
     <div className={styles.filterBox}>
       <div className={styles.deviceSelection}>
         <label htmlFor="device-select">Device:</label>
         <select
           id="device-select"
-          value={props.deviceId}
-          onChange={(e) => props.setDeviceId(parseInt(e.currentTarget.value))}
+          value={deviceId}
+          onChange={handleDeviceIdChange}
         >
-          <option value={-1}>select a device</option>
+          <option value={-1}>
+            {props.devicesInfoStatus === "succeeded"
+              ? "select a device"
+              : props.devicesInfoStatus === "loading"
+              ? "loading devices"
+              : "faild loading devices!"}
+          </option>
           {props.devicesData.map((device, index) => (
             <option value={device.deviceId} key={index}>
               {device.deviceName}
@@ -57,16 +71,8 @@ export default function FilterBox(props: Props) {
           <input
             type="date"
             id="fromDate"
-            value={format(props.fromDateTime, "yyyy-MM-dd")}
-            onChange={(e) => {
-              if (e.currentTarget.value !== "") {
-                const newDate =
-                  e.currentTarget.value +
-                  "T" +
-                  format(props.fromDateTime, "HH:mm:ss");
-                props.setFromDateTime(new Date(newDate));
-              }
-            }}
+            value={fromDate}
+            onChange={handleFromDateChange}
           />
         </div>
         <div className={styles.timeSelection}>
@@ -74,17 +80,8 @@ export default function FilterBox(props: Props) {
           <input
             type="time"
             id="fromTime"
-            value={format(props.fromDateTime, "HH:mm")}
-            onChange={(e) => {
-              if (e.currentTarget.value !== "") {
-                const newDate =
-                  format(props.fromDateTime, "yyyy-MM-dd") +
-                  "T" +
-                  e.currentTarget.value +
-                  ":00";
-                props.setFromDateTime(new Date(newDate));
-              }
-            }}
+            value={fromTime}
+            onChange={handleFromTimeChange}
           />
         </div>
       </div>
@@ -95,16 +92,8 @@ export default function FilterBox(props: Props) {
           <input
             type="date"
             id="toDate"
-            value={format(props.toDateTime, "yyyy-MM-dd")}
-            onChange={(e) => {
-              if (e.currentTarget.value !== "") {
-                const newDate =
-                  e.currentTarget.value +
-                  "T" +
-                  format(props.toDateTime, "HH:mm:ss");
-                props.setToDateTime(new Date(newDate));
-              }
-            }}
+            value={toDate}
+            onChange={handleToDateChange}
           />
         </div>
         <div className={styles.timeSelection}>
@@ -112,17 +101,8 @@ export default function FilterBox(props: Props) {
           <input
             type="time"
             id="toTime"
-            value={format(props.toDateTime, "HH:mm")}
-            onChange={(e) => {
-              if (e.currentTarget.value !== "") {
-                const newDate =
-                  format(props.toDateTime, "yyyy-MM-dd") +
-                  "T" +
-                  e.currentTarget.value +
-                  ":00";
-                props.setToDateTime(new Date(newDate));
-              }
-            }}
+            value={toTime}
+            onChange={handleToTimeChange}
           />
         </div>
       </div>
@@ -134,11 +114,8 @@ export default function FilterBox(props: Props) {
               type="radio"
               name="avrage"
               id="month"
-              checked={props.avrageMode === "month"}
-              onChange={(e) => {
-                if (e.currentTarget.value === "on")
-                  props.setAvrageMode("month");
-              }}
+              checked={avrageMode === "month"}
+              onChange={(e) => handleAvrageModeChange(e, "month")}
             />
             <label htmlFor="month">every month</label>
           </div>
@@ -147,10 +124,8 @@ export default function FilterBox(props: Props) {
               type="radio"
               name="avrage"
               id="week"
-              checked={props.avrageMode === "week"}
-              onChange={(e) => {
-                if (e.currentTarget.value === "on") props.setAvrageMode("week");
-              }}
+              checked={avrageMode === "week"}
+              onChange={(e) => handleAvrageModeChange(e, "week")}
             />
             <label htmlFor="week">every week</label>
           </div>
@@ -159,10 +134,8 @@ export default function FilterBox(props: Props) {
               type="radio"
               name="avrage"
               id="day"
-              checked={props.avrageMode === "day"}
-              onChange={(e) => {
-                if (e.currentTarget.value === "on") props.setAvrageMode("day");
-              }}
+              checked={avrageMode === "day"}
+              onChange={(e) => handleAvrageModeChange(e, "day")}
             />
             <label htmlFor="day">every day</label>
           </div>
@@ -171,11 +144,8 @@ export default function FilterBox(props: Props) {
               type="radio"
               name="avrage"
               id="six-hours"
-              checked={props.avrageMode === "six-hours"}
-              onChange={(e) => {
-                if (e.currentTarget.value === "on")
-                  props.setAvrageMode("six-hours");
-              }}
+              checked={avrageMode === "six-hours"}
+              onChange={(e) => handleAvrageModeChange(e, "six-hours")}
             />
             <label htmlFor="six-hours">every six-hours</label>
           </div>
@@ -184,10 +154,8 @@ export default function FilterBox(props: Props) {
               type="radio"
               name="avrage"
               id="hour"
-              checked={props.avrageMode === "hour"}
-              onChange={(e) => {
-                if (e.currentTarget.value === "on") props.setAvrageMode("hour");
-              }}
+              checked={avrageMode === "hour"}
+              onChange={(e) => handleAvrageModeChange(e, "hour")}
             />
             <label htmlFor="hour">every hour</label>
           </div>
@@ -196,10 +164,8 @@ export default function FilterBox(props: Props) {
               type="radio"
               name="avrage"
               id="none"
-              checked={props.avrageMode === "none"}
-              onChange={(e) => {
-                if (e.currentTarget.value === "on") props.setAvrageMode("none");
-              }}
+              checked={avrageMode === "none"}
+              onChange={(e) => handleAvrageModeChange(e, "none")}
             />
             <label htmlFor="none">no averaging</label>
           </div>
@@ -208,32 +174,153 @@ export default function FilterBox(props: Props) {
     </div>
   );
 
+  function getChartData(
+    deviceId: number,
+    fromDate: string,
+    fromTime: string,
+    toDate: string,
+    toTime: string,
+    avrageMode: AvrageMode
+  ) {
+    if (deviceId !== -1) {
+      props.setChartDataStatus("loading");
+      axios
+        .get(import.meta.env.VITE_API_URL + "/chart-data", {
+          params: {
+            deviceId: deviceId,
+            fromDateTime: fromDate + "T" + fromTime + ":00",
+            toDateTime: toDate + "T" + toTime + ":00",
+            avrageMode: avrageMode,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            props.setChartData(response.data);
+            props.setChartDataStatus("succeeded");
+          } else {
+            props.setChartDataStatus("failed");
+            console.error(
+              "something went wrong... can not get chart data!",
+              response
+            );
+          }
+        });
+    }
+  }
+
+  function handleDeviceIdChange(e: ChangeEvent<HTMLSelectElement>) {
+    setDeviceId(parseInt(e.currentTarget.value));
+    getChartData(
+      parseInt(e.currentTarget.value),
+      fromDate,
+      fromTime,
+      toDate,
+      toTime,
+      avrageMode
+    );
+  }
+  function handleFromDateChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.currentTarget.value !== "") {
+      setFromDate(e.currentTarget.value);
+      getChartData(
+        deviceId,
+        e.currentTarget.value,
+        fromTime,
+        toDate,
+        toTime,
+        avrageMode
+      );
+    }
+  }
+  function handleFromTimeChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.currentTarget.value !== "") {
+      setFromTime(e.currentTarget.value);
+      getChartData(
+        deviceId,
+        fromDate,
+        e.currentTarget.value,
+        toDate,
+        toTime,
+        avrageMode
+      );
+    }
+  }
+  function handleToDateChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.currentTarget.value !== "") {
+      setToDate(e.currentTarget.value);
+      getChartData(
+        deviceId,
+        fromDate,
+        fromTime,
+        e.currentTarget.value,
+        toTime,
+        avrageMode
+      );
+    }
+  }
+  function handleToTimeChange(e: ChangeEvent<HTMLInputElement>) {
+    if (e.currentTarget.value !== "") {
+      setToTime(e.currentTarget.value);
+      getChartData(
+        deviceId,
+        fromDate,
+        fromTime,
+        toDate,
+        e.currentTarget.value,
+        avrageMode
+      );
+    }
+  }
+  function handleAvrageModeChange(
+    e: ChangeEvent<HTMLInputElement>,
+    avrageMode: AvrageMode
+  ) {
+    if (e.currentTarget.value === "on") {
+      setAvrageMode(avrageMode);
+      getChartData(deviceId, fromDate, fromTime, toDate, toTime, avrageMode);
+    }
+  }
+
+  function changeDateTimeAndAvrageModeStates(
+    fromDateTime: Date,
+    toDateTime: Date,
+    avrageMode: AvrageMode
+  ) {
+    const fromDate = format(fromDateTime, "yyyy-MM-dd");
+    const fromTime = format(fromDateTime, "HH:mm");
+    const toDate = format(toDateTime, "yyyy-MM-dd");
+    const toTime = format(toDateTime, "HH:mm");
+
+    setFromDate(fromDate);
+    setFromTime(fromTime);
+    setToDate(toDate);
+    setToTime(toTime);
+    setAvrageMode(avrageMode);
+
+    getChartData(deviceId, fromDate, fromTime, toDate, toTime, avrageMode);
+  }
+
   function filterByLastDay() {
     const today = new Date();
     const yesterday = subDays(today, 1);
-
-    props.setFromDateTime(yesterday);
-    props.setToDateTime(today);
+    changeDateTimeAndAvrageModeStates(yesterday, today, "none");
   }
   function filterByLastWeek() {
     const today = new Date();
     const sevenDaysAgo = subDays(today, 7);
 
-    props.setFromDateTime(sevenDaysAgo);
-    props.setToDateTime(today);
+    changeDateTimeAndAvrageModeStates(sevenDaysAgo, today, "none");
   }
   function filterByLastMonth() {
     const today = new Date();
     const aMonthAgo = subMonths(today, 1);
 
-    props.setFromDateTime(aMonthAgo);
-    props.setToDateTime(today);
+    changeDateTimeAndAvrageModeStates(aMonthAgo, today, "hour");
   }
   function filterByLastYear() {
     const today = new Date();
     const aYearAgo = subYears(today, 1);
 
-    props.setFromDateTime(aYearAgo);
-    props.setToDateTime(today);
+    changeDateTimeAndAvrageModeStates(aYearAgo, today, "six-hours");
   }
 }

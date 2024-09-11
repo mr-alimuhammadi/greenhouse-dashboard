@@ -43,3 +43,9 @@
   padding: 1rem;
   color: $primary;
 }
+.loadingMaskMessageBox {
+  font-size: 1.25rem;
+}
+.errorMaskMessageBox {
+  color: $danger;
+}

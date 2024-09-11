@@ -3,22 +3,41 @@ import MainLayout from "./layouts/main-layout";
 import Home from "./pages/home";
 import Reports from "./pages/reports";
 import { useEffect, useState } from "react";
-import { DeviceData } from "./types/device-data";
-import generateDevicesData from "./utils/generate-devices-data";
+import { DeviceInfo } from "./types/device-info";
+import axios from "axios";
+import { Status } from "./types/status";
 
 function App() {
-  const [devicesData, setDevicesData] = useState<DeviceData[]>([]);
+  const [devicesInfo, setDevicesInfo] = useState<DeviceInfo[]>([]);
+  const [devicesInfoStatus, setDevicesInfoStatus] = useState<Status>("idle");
 
   useEffect(() => {
-    setDevicesData(generateDevicesData());
-  }, []);
+    if (devicesInfoStatus === "idle") {
+      setDevicesInfoStatus("loading");
+      axios.get(import.meta.env.VITE_API_URL + "/device").then((response) => {
+        if (response.status === 200) {
+          setDevicesInfo(response.data as DeviceInfo[]);
+          setDevicesInfoStatus("succeeded");
+        } else {
+          console.error(
+            "something went wrong... can not get devices data!",
+            response
+          );
+          setDevicesInfoStatus("failed");
+        }
+      });
+    }
+  }, [devicesInfoStatus]);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={MainLayout()}>
-          <Route index element={Home({ devicesData })} />
-          <Route path="reports" element={Reports({ devicesData })} />
+          <Route index element={Home({ devicesInfo, devicesInfoStatus })} />
+          <Route
+            path="reports"
+            element={Reports({ devicesInfo, devicesInfoStatus })}
+          />
         </Route>
       </Routes>
     </BrowserRouter>
