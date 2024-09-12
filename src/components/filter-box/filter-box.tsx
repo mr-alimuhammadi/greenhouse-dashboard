@@ -1,4 +1,3 @@
-import { format, subDays, subMonths, subYears } from "date-fns";
 import styles from "./filter-box.module.scss";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { AvrageMode } from "../../types/avrage-mode";
@@ -6,6 +5,12 @@ import axios from "axios";
 import { ChartData } from "../../types/chart-data";
 import { DeviceInfo } from "../../types/device-info";
 import { Status } from "../../types/status";
+import DatePicker from "react-multi-date-picker";
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import persian_en from "react-date-object/locales/persian_en";
+import DateObject from "react-date-object";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
 interface Props {
   devicesData: DeviceInfo[];
@@ -16,13 +21,18 @@ interface Props {
 }
 export default function FilterBox(props: Props) {
   const [deviceId, setDeviceId] = useState(-1);
-  const today = new Date();
-  const aMonthAgo = subMonths(today, 1);
-  const [fromDate, setFromDate] = useState(format(aMonthAgo, "yyyy-MM-dd"));
-  const [fromTime, setFromTime] = useState(format(aMonthAgo, "HH:mm"));
-  const [toDate, setToDate] = useState(format(today, "yyyy-MM-dd"));
-  const [toTime, setToTime] = useState(format(today, "HH:mm"));
-  const [avrageMode, setAvrageMode] = useState<AvrageMode>("none");
+  const today = new DateObject({ calendar: persian });
+  const aMonthAgo = new DateObject(today).subtract(1, "month");
+  const [fromDateTime, setFromDateTime] = useState(aMonthAgo);
+  const [toDateTime, setToDateTime] = useState(today);
+  const [avrageMode, setAvrageMode] = useState<AvrageMode>("hour");
+
+  console.log(
+    new DateObject({
+      calendar: persian,
+      date: new Date(),
+    }).month.number
+  );
 
   return (
     <div className={styles.filterBox}>
@@ -68,20 +78,27 @@ export default function FilterBox(props: Props) {
         <span>از</span>
         <div className={styles.dateSelection}>
           <label htmlFor="fromDate">تاریخ:</label>
-          <input
-            type="date"
-            id="fromDate"
-            value={fromDate}
-            onChange={handleFromDateChange}
+          <DatePicker
+            inputClass={styles.datePicker}
+            containerClassName={styles.datePickerContainer}
+            calendar={persian}
+            locale={persian_fa}
+            value={fromDateTime}
+            onChange={handleFromDateTimeChange}
           />
         </div>
         <div className={styles.timeSelection}>
           <label htmlFor="fromTime">زمان:</label>
-          <input
-            type="time"
-            id="fromTime"
-            value={fromTime}
-            onChange={handleFromTimeChange}
+          <DatePicker
+            disableDayPicker
+            format="HH:mm:ss"
+            plugins={[<TimePicker className={styles.timePicker} />]}
+            inputClass={styles.datePicker}
+            containerClassName={styles.datePickerContainer}
+            calendar={persian}
+            locale={persian_fa}
+            value={fromDateTime}
+            onChange={handleFromDateTimeChange}
           />
         </div>
       </div>
@@ -89,20 +106,27 @@ export default function FilterBox(props: Props) {
         <span>تا</span>
         <div className={styles.dateSelection}>
           <label htmlFor="toDate">تاریخ:</label>
-          <input
-            type="date"
-            id="toDate"
-            value={toDate}
-            onChange={handleToDateChange}
+          <DatePicker
+            inputClass={styles.datePicker}
+            containerClassName={styles.datePickerContainer}
+            calendar={persian}
+            locale={persian_fa}
+            value={toDateTime}
+            onChange={handleToDateTimeChange}
           />
         </div>
         <div className={styles.timeSelection}>
           <label htmlFor="toTime">زمان:</label>
-          <input
-            type="time"
-            id="toTime"
-            value={toTime}
-            onChange={handleToTimeChange}
+          <DatePicker
+            disableDayPicker
+            format="HH:mm:ss"
+            plugins={[<TimePicker className={styles.timePicker} />]}
+            inputClass={styles.datePicker}
+            containerClassName={styles.datePickerContainer}
+            calendar={persian}
+            locale={persian_fa}
+            value={toDateTime}
+            onChange={handleToDateTimeChange}
           />
         </div>
       </div>
@@ -176,20 +200,19 @@ export default function FilterBox(props: Props) {
 
   function getChartData(
     deviceId: number,
-    fromDate: string,
-    fromTime: string,
-    toDate: string,
-    toTime: string,
+    fromDateTime: DateObject,
+    toDateTime: DateObject,
     avrageMode: AvrageMode
   ) {
     if (deviceId !== -1) {
       props.setChartDataStatus("loading");
+      fromDateTime.locale = toDateTime.locale = persian_en;
       axios
         .get(import.meta.env.VITE_API_URL + "/chart-data", {
           params: {
             deviceId: deviceId,
-            fromDateTime: fromDate + "T" + fromTime + ":00",
-            toDateTime: toDate + "T" + toTime + ":00",
+            fromDateTime: fromDateTime.format("YYYY/MM/DD HH:mm:ss"),
+            toDateTime: toDateTime.format("YYYY/MM/DD HH:mm:ss"),
             avrageMode: avrageMode,
           },
         })
@@ -212,63 +235,21 @@ export default function FilterBox(props: Props) {
     setDeviceId(parseInt(e.currentTarget.value));
     getChartData(
       parseInt(e.currentTarget.value),
-      fromDate,
-      fromTime,
-      toDate,
-      toTime,
+      fromDateTime,
+      toDateTime,
       avrageMode
     );
   }
-  function handleFromDateChange(e: ChangeEvent<HTMLInputElement>) {
-    if (e.currentTarget.value !== "") {
-      setFromDate(e.currentTarget.value);
-      getChartData(
-        deviceId,
-        e.currentTarget.value,
-        fromTime,
-        toDate,
-        toTime,
-        avrageMode
-      );
+  function handleFromDateTimeChange(date: DateObject) {
+    if (date.isValid) {
+      setFromDateTime(date);
+      getChartData(deviceId, date, toDateTime, avrageMode);
     }
   }
-  function handleFromTimeChange(e: ChangeEvent<HTMLInputElement>) {
-    if (e.currentTarget.value !== "") {
-      setFromTime(e.currentTarget.value);
-      getChartData(
-        deviceId,
-        fromDate,
-        e.currentTarget.value,
-        toDate,
-        toTime,
-        avrageMode
-      );
-    }
-  }
-  function handleToDateChange(e: ChangeEvent<HTMLInputElement>) {
-    if (e.currentTarget.value !== "") {
-      setToDate(e.currentTarget.value);
-      getChartData(
-        deviceId,
-        fromDate,
-        fromTime,
-        e.currentTarget.value,
-        toTime,
-        avrageMode
-      );
-    }
-  }
-  function handleToTimeChange(e: ChangeEvent<HTMLInputElement>) {
-    if (e.currentTarget.value !== "") {
-      setToTime(e.currentTarget.value);
-      getChartData(
-        deviceId,
-        fromDate,
-        fromTime,
-        toDate,
-        e.currentTarget.value,
-        avrageMode
-      );
+  function handleToDateTimeChange(date: DateObject) {
+    if (date.isValid) {
+      setToDateTime(date);
+      getChartData(deviceId, fromDateTime, date, avrageMode);
     }
   }
   function handleAvrageModeChange(
@@ -277,49 +258,42 @@ export default function FilterBox(props: Props) {
   ) {
     if (e.currentTarget.value === "on") {
       setAvrageMode(avrageMode);
-      getChartData(deviceId, fromDate, fromTime, toDate, toTime, avrageMode);
+      getChartData(deviceId, fromDateTime, toDateTime, avrageMode);
     }
   }
 
   function changeDateTimeAndAvrageModeStates(
-    fromDateTime: Date,
-    toDateTime: Date,
+    fromDateTime: DateObject,
+    toDateTime: DateObject,
     avrageMode: AvrageMode
   ) {
-    const fromDate = format(fromDateTime, "yyyy-MM-dd");
-    const fromTime = format(fromDateTime, "HH:mm");
-    const toDate = format(toDateTime, "yyyy-MM-dd");
-    const toTime = format(toDateTime, "HH:mm");
-
-    setFromDate(fromDate);
-    setFromTime(fromTime);
-    setToDate(toDate);
-    setToTime(toTime);
+    setFromDateTime(fromDateTime);
+    setToDateTime(toDateTime);
     setAvrageMode(avrageMode);
 
-    getChartData(deviceId, fromDate, fromTime, toDate, toTime, avrageMode);
+    getChartData(deviceId, fromDateTime, toDateTime, avrageMode);
   }
 
   function filterByLastDay() {
-    const today = new Date();
-    const yesterday = subDays(today, 1);
+    const today = new DateObject({ calendar: persian });
+    const yesterday = new DateObject(today).subtract(1, "day");
     changeDateTimeAndAvrageModeStates(yesterday, today, "none");
   }
   function filterByLastWeek() {
-    const today = new Date();
-    const sevenDaysAgo = subDays(today, 7);
+    const today = new DateObject({ calendar: persian });
+    const sevenDaysAgo = new DateObject(today).subtract(7, "day");
 
     changeDateTimeAndAvrageModeStates(sevenDaysAgo, today, "none");
   }
   function filterByLastMonth() {
-    const today = new Date();
-    const aMonthAgo = subMonths(today, 1);
+    const today = new DateObject({ calendar: persian });
+    const aMonthAgo = new DateObject(today).subtract(1, "month");
 
     changeDateTimeAndAvrageModeStates(aMonthAgo, today, "hour");
   }
   function filterByLastYear() {
-    const today = new Date();
-    const aYearAgo = subYears(today, 1);
+    const today = new DateObject({ calendar: persian });
+    const aYearAgo = new DateObject(today).subtract(1, "year");
 
     changeDateTimeAndAvrageModeStates(aYearAgo, today, "six-hours");
   }
