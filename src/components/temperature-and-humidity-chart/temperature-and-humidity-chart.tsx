@@ -13,6 +13,7 @@ import {
 import useBypassRechartsErorr from "../../hooks/use-bypass-recharts-erorr";
 import { useState } from "react";
 import { ChartData } from "../../types/chart-data";
+import toFarsiNumber from "../../utils/to-farsi-numbers";
 
 interface Props {
   data: ChartData[];
@@ -71,13 +72,23 @@ export default function TemperatureAndHumidityChart(props: Props) {
             height={48}
             padding={{ left: 10 }}
           />
-          <YAxis tickMargin={10} domain={[-30, 100]} />
+          <YAxis
+            tickMargin={10}
+            domain={[-30, 100]}
+            tickFormatter={(value) => toFarsiNumber(value)}
+          />
           <Tooltip
             formatter={(value, name) => {
-              if (name === "دما") return `${value}C`;
-              if (name === "رطوبت") return `%${value}`;
+              if (name === "دما")
+                return (
+                  <span dir="ltr">
+                    <span dir="rtl">{toFarsiNumber(value as number)}</span>C
+                  </span>
+                );
+              if (name === "رطوبت") return `%${toFarsiNumber(value as number)}`;
             }}
-            labelFormatter={(lable) => `زمان و تاریخ : ${lable}`}
+            wrapperStyle={{ direction: "ltr" }}
+            labelFormatter={(lable) => `تاریخ و زمان : ${lable}`}
             contentStyle={{
               backgroundColor: "rgba(255, 255, 255, 0.5)",
               backdropFilter: "blur(2px)",
