@@ -88,7 +88,22 @@ export default function TemperatureAndHumidityChart(props: Props) {
               if (name === "رطوبت") return `%${toFarsiNumber(value as number)}`;
             }}
             wrapperStyle={{ direction: "ltr" }}
-            labelFormatter={(lable) => `تاریخ و زمان : ${lable}`}
+            labelFormatter={(lable: string) => {
+              if (lable.includes(",")) {
+                return (
+                  <div style={{ marginBottom: "0.5rem" }}>
+                    <div>
+                      <span>از : </span>
+                      <span>{lable.slice(1, lable.indexOf(","))}</span>
+                    </div>
+                    <div>
+                      <span>تا : </span>
+                      <span>{lable.slice(lable.indexOf(",") + 1, -1)}</span>
+                    </div>
+                  </div>
+                );
+              } else return `تاریخ و زمان : ${lable}`;
+            }}
             contentStyle={{
               backgroundColor: "rgba(255, 255, 255, 0.5)",
               backdropFilter: "blur(2px)",

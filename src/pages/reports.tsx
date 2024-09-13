@@ -41,9 +41,9 @@ export default function Reports(props: Props) {
         maskZIndex={10}
         message={
           chartDataStatus === "loading"
-            ? "بارگیری داده ها نمودار"
+            ? "بارگیری داده های نمودار"
             : chartDataStatus === "failed"
-            ? "مشکلی در ارتباط پیش امده... نمی توان داده ها را بارگزاری کرد!"
+            ? "اشکالی در ارتباط پیش امده... نمی توان داده ها را بارگزاری کرد!"
             : "ابتدا یک دستگاه را انتخاب کنید"
         }
         messageBoxClassName={
