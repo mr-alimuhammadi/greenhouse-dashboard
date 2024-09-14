@@ -4,7 +4,7 @@
   color: $light;
 
   display: flex;
-  gap: 1rem;
+  justify-content: space-between;
   align-items: center;
 
   .sideNavbarButton {
@@ -15,7 +15,7 @@
     & {
       display: none;
     }
-    @media screen and (max-width: 576px) {
+    @media screen and (max-width: 768px) {
       display: inline;
     }
   }
@@ -23,7 +23,7 @@
   .brand {
     font-size: 1.5rem;
     font-weight: bold;
-    @media screen and (max-width: 576px) {
+    @media screen and (max-width: 768px) {
       font-size: 1.25rem;
     }
   }
@@ -32,8 +32,14 @@
     &:hover {
       text-decoration: underline;
     }
-    @media screen and (max-width: 576px) {
+    @media screen and (max-width: 768px) {
       display: none;
     }
   }
+}
+
+.right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
