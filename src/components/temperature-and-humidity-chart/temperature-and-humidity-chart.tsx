@@ -75,7 +75,7 @@ export default function TemperatureAndHumidityChart(props: Props) {
           <YAxis
             tickMargin={10}
             domain={[-30, 100]}
-            tickFormatter={(value) => toFarsiNumber(value)}
+            tickFormatter={(value) => toFarsiNumber(value, true)}
           />
           <Tooltip
             formatter={(value, name) => {

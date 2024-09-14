@@ -1,4 +1,4 @@
-export default function toFarsiNumber(n: number) {
+export default function toFarsiNumber(n: number, dashStart: boolean = false) {
   const farsiDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
   const farsiNumber = n
@@ -11,7 +11,8 @@ export default function toFarsiNumber(n: number) {
     .join("");
 
   if (n < 0) {
-    return farsiNumber + "-";
+    if (!dashStart) return farsiNumber + "-";
+    return "-" + farsiNumber;
   }
   return farsiNumber;
 }
