@@ -1,13 +1,5 @@
 .slider {
   width: 100%;
-  aspect-ratio: 1;
-
-  @media screen and (min-width: 576px) and (max-width: 992px) {
-    aspect-ratio: 4/3;
-  }
-  @media screen and (min-width: 992px) {
-    aspect-ratio: 16/9;
-  }
 }
 .swiper {
   width: 100%;
@@ -21,15 +13,19 @@
 }
 
 .newsCard {
-  border-radius: 1rem;
-  padding: 2rem;
+  border-radius: 0.5rem;
+  padding: 1rem;
   color: white;
   text-shadow: 1px 1px 1px black, 2px 2px 4px black;
 
   background-size: cover;
   background-position: center;
 
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: 10rem;
   width: 100%;
 }
 .title {
