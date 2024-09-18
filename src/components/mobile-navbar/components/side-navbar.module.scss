@@ -1,0 +1,52 @@
+.sideNavbarContainer {
+  display: none;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100vw;
+  left: -100%;
+  transition: left 350ms ease;
+
+  &.visible {
+    left: 0;
+  }
+
+  @media screen and (max-width: 1024px) {
+    display: flex;
+  }
+}
+.sideNavbar {
+  width: 300px;
+  padding: 2rem 1rem;
+  background-color: $bg_secondary_color;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+  color: $text_secondary_color;
+
+  ul {
+    margin-top: 2rem;
+    list-style-type: none;
+    li {
+      margin: 1.5rem 0.5rem;
+    }
+  }
+}
+.closeButtonContainer {
+  text-align: end;
+}
+.home {
+  color: $primary_color;
+}
+.exit {
+  color: $danger_color;
+}
+.line {
+  color: $text_secondary_color;
+  width: 100%;
+}
+.emptyArea {
+  flex-grow: 1;
+}
+.closeButton:hover svg {
+  fill: $danger_color;
+}

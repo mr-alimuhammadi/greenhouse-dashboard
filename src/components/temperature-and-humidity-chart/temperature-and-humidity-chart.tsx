@@ -11,24 +11,30 @@ import {
   YAxis,
 } from "recharts";
 import useBypassRechartsErorr from "../../hooks/use-bypass-recharts-erorr";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChartData } from "../../types/chart-data";
 import toFarsiNumber from "../../utils/to-farsi-numbers";
+import Button from "../button/button";
 
 interface Props {
   data: ChartData[];
 }
 export default function TemperatureAndHumidityChart(props: Props) {
   const [reverse, setReverse] = useState(true);
+  const temperatureLineRef = useRef(null);
+  const humidityLineRef = useRef(null);
 
   useBypassRechartsErorr();
 
   const chartData = [...props.data];
+  const averages = calculateAverage(props.data);
 
   if (reverse) chartData.reverse();
 
   const width =
     window.innerWidth > 1200
+      ? 800
+      : window.innerWidth > 992
       ? 640
       : window.innerWidth > 768
       ? 480
@@ -46,17 +52,11 @@ export default function TemperatureAndHumidityChart(props: Props) {
       ? 15
       : 10;
 
+  const startIndex = reverse ? 0 : chartData.length - 1 - displayRecordCount;
+  const endIndex = reverse ? displayRecordCount : chartData.length - 1;
+
   return (
     <div className={styles.chartContainer}>
-      <div className={styles.reverseButtonContainer}>
-        <button
-          type="button"
-          className={styles.reverseButton}
-          onClick={() => setReverse((reverse) => !reverse)}
-        >
-          {reverse ? "معکوس" : "عادی"}
-        </button>
-      </div>
       <ResponsiveContainer width={"100%"} aspect={width / height}>
         <LineChart
           width={width}
@@ -73,6 +73,7 @@ export default function TemperatureAndHumidityChart(props: Props) {
             padding={{ left: 10 }}
           />
           <YAxis
+            hide
             tickMargin={10}
             domain={[-30, 100]}
             tickFormatter={(value) => toFarsiNumber(value, true)}
@@ -114,26 +115,68 @@ export default function TemperatureAndHumidityChart(props: Props) {
             height={32}
             data={chartData}
             dataKey={"datetime"}
-            startIndex={reverse ? 0 : chartData.length - 1 - displayRecordCount}
-            endIndex={reverse ? displayRecordCount : chartData.length - 1}
+            startIndex={startIndex}
+            endIndex={endIndex}
           />
           <Legend verticalAlign="top" height={32} />
           <Line
+            ref={temperatureLineRef}
             type="monotone"
             dataKey="temperature"
             stroke="#dc3545"
             name="دما"
-            dot={false}
           />
           <Line
+            ref={humidityLineRef}
             type="monotone"
             dataKey="humidity"
             stroke="#8884d8"
             name="رطوبت"
-            dot={false}
           />
         </LineChart>
       </ResponsiveContainer>
+      <div className={styles.control}>
+        <div className={styles.averageOverview}>
+          <div className={styles.temperature}>
+            میانگین دما در این بازه :{" "}
+            <span dir="ltr">{toFarsiNumber(averages.temperatureAverage)}C</span>
+          </div>
+          <div className={styles.humidity}>
+            میانگین رطوبت در این بازه :{" "}
+            <span dir="ltr">{toFarsiNumber(averages.humidityAverage)}%</span>
+          </div>
+        </div>
+        <div className={styles.buttons}>
+          <Button
+            color={reverse ? "primary" : "gray"}
+            onClick={() => setReverse(true)}
+          >
+            نزولی
+          </Button>
+          <Button
+            color={reverse ? "gray" : "primary"}
+            onClick={() => setReverse(false)}
+          >
+            صعودی
+          </Button>
+        </div>
+      </div>
     </div>
   );
+  function calculateAverage(data: ChartData[]) {
+    let sumOfTemperature = 0;
+    let sumOfHumidity = 0;
+
+    data.forEach((record) => {
+      sumOfTemperature += record.temperature;
+      sumOfHumidity += record.humidity;
+    });
+
+    return {
+      temperatureAverage: parseFloat(
+        (sumOfTemperature / data.length).toFixed(1)
+      ),
+      humidityAverage: parseFloat((sumOfHumidity / data.length).toFixed(1)),
+    };
+  }
 }

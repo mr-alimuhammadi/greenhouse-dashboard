@@ -1,0 +1,15 @@
+.innerBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:hover {
+    color: $primary_color;
+    svg {
+      fill: $primary_color;
+    }
+  }
+}
+.icon {
+  font-size: 2rem;
+}

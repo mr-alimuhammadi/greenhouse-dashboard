@@ -71,8 +71,11 @@ body {
 body {
   direction: rtl;
   font-family: "IRANSans", sans-serif;
-  background-color: $light;
-  color: black;
+  background-color: $bg_primary_color;
+  background-image: url("static/images/background.png");
+  background-size: cover;
+  background-repeat: repeat;
+  color: $text_primary_color;
   position: relative;
   font-size: 16px;
   padding: 0;

@@ -1,0 +1,48 @@
+.slider {
+  border-radius: 1rem;
+  padding: 0.25rem 0.5rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+  border: 1px solid #e1e1e1;
+  &:hover {
+    border-color: rgba(#999, 0.5);
+  }
+
+  @media screen and (min-width: 992px) {
+    margin: 0 1rem;
+  }
+  @media screen and (min-width: 1200px) {
+    margin: 0 3rem;
+  }
+  @media screen and (min-width: 1400px) {
+    margin: 0 5rem;
+  }
+}
+.swiper {
+  flex-grow: 1;
+  height: 100%;
+}
+
+.deviceButton {
+  width: 100%;
+  font-size: 1.125rem;
+  border-radius: 0.5rem;
+}
+.loading {
+  color: $primary_color;
+  span {
+    margin-left: 0.75rem;
+  }
+}
+.failed {
+  color: $danger_color;
+}
+
+.buttons {
+  font-size: 2rem;
+  svg {
+    fill: $text_secondary_color;
+  }
+}

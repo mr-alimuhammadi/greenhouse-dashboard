@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/main-layout";
 import Home from "./pages/home";
-import Reports from "./pages/reports";
 import { useEffect, useState } from "react";
 import { DeviceInfo } from "./types/device-info";
 import axios from "axios";
@@ -34,10 +33,6 @@ function App() {
       <Routes>
         <Route path="/" element={MainLayout()}>
           <Route index element={Home({ devicesInfo, devicesInfoStatus })} />
-          <Route
-            path="reports"
-            element={Reports({ devicesInfo, devicesInfoStatus })}
-          />
         </Route>
       </Routes>
     </BrowserRouter>

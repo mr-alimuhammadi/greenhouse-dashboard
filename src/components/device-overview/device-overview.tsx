@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import CollapseBox from "../collapse-box/collapse-box";
 import styles from "./device-overivew.module.scss";
+import variables from "../../styles/variables.module.scss";
 import TemperatureAndHumidityChart from "../temperature-and-humidity-chart/temperature-and-humidity-chart";
 import axios from "axios";
 import { ChartData } from "../../types/chart-data";
@@ -10,16 +10,13 @@ import { Status } from "../../types/status";
 
 interface Props {
   deviceId: number;
-  deviceName: string;
-  deviceZone: string;
 }
 export default function DeviceOverview(props: Props) {
-  const [collapse, setCollapse] = useState(true);
   const [chartData, setChartData] = useState<ChartData[]>([]);
   const [chartDataStatus, setChartDataStatus] = useState<Status>("idle");
 
   useEffect(() => {
-    if (chartDataStatus === "idle") {
+    if (props.deviceId !== -1) {
       setChartDataStatus("loading");
       axios
         .get(import.meta.env.VITE_API_URL + "/chart-data/" + props.deviceId)
@@ -36,56 +33,41 @@ export default function DeviceOverview(props: Props) {
           }
         });
     }
-  }, [props.deviceId, chartDataStatus]);
+  }, [props.deviceId]);
 
   return (
     <div className={styles.decviceOverview}>
-      <div className={styles.deviceCard}>
-        <img
-          src="/static/images/ARM micro.png"
-          alt="arm micro"
-          className={styles.deviceImage}
-        />
-        <div className={styles.deviceInfo}>
-          <div className={styles.deviceName}>{props.deviceName}</div>
-          <div className={styles.deviceZone}>{props.deviceZone}</div>
-        </div>
-        <button
-          type="button"
-          className={styles.collapseToggleButton}
-          onClick={() => setCollapse((collapse) => !collapse)}
-        >
-          <i className={`bi bi-chevron-${collapse ? "down" : "up"}`}></i>
-        </button>
-      </div>
-      <CollapseBox collapse={collapse} className={styles.collapseCard}>
-        <h3>میزان دما و رطوبت</h3>
-        <LoadingMask
-          loading={
-            chartDataStatus === "loading" || chartDataStatus === "failed"
-          }
-          maskZIndex={10}
-          message={
-            chartDataStatus === "loading"
-              ? "بارگیری داده های نمودار"
-              : "مشکلی در ارتباط پیش امد... نمی توان داده ها را بارگیری کرد!"
-          }
-          messageBoxClassName={
-            chartDataStatus === "loading"
-              ? styles.loadingMaskMessageBox
-              : styles.errorMaskMessageBox
-          }
-          spinner={
-            <ClipLoader
-              color={"#0d6efd"}
-              loading={chartDataStatus === "loading"}
-              size={20}
-            />
-          }
-        >
-          <TemperatureAndHumidityChart data={chartData} />
-        </LoadingMask>
-      </CollapseBox>
+      <LoadingMask
+        loading={
+          chartDataStatus === "loading" ||
+          chartDataStatus === "failed" ||
+          props.deviceId === -1
+        }
+        maskZIndex={2}
+        message={
+          props.deviceId === -1
+            ? "ابتدا یک دستگاه را انتخاب کنید"
+            : chartDataStatus === "loading"
+            ? "بارگیری داده های نمودار"
+            : "مشکلی در ارتباط پیش امد... نمی توان داده ها را بارگیری کرد!"
+        }
+        messageBoxClassName={
+          props.deviceId === -1
+            ? styles.notSelectedMaskMessageBox
+            : chartDataStatus === "loading"
+            ? styles.loadingMaskMessageBox
+            : styles.errorMaskMessageBox
+        }
+        spinner={
+          <ClipLoader
+            color={variables.primaryColor}
+            loading={chartDataStatus === "loading"}
+            size={20}
+          />
+        }
+      >
+        <TemperatureAndHumidityChart data={chartData} />
+      </LoadingMask>
     </div>
   );
 }

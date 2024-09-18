@@ -1,51 +1,11 @@
 .decviceOverview {
   margin: 1rem 0;
 }
-.deviceCard {
-  background-color: rgba($primary, 0.4);
-  border-radius: 1rem;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  overflow: hidden;
-}
-.deviceImage {
-  aspect-ratio: 1;
-  height: 4rem;
-  margin: 0.5rem;
-}
-.deviceInfo {
-  margin-right: 0.5rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-.deviceName {
+.loadingMaskMessageBox,
+.notSelectedMaskMessageBox {
   font-size: 1.25rem;
-  text-transform: uppercase;
-}
-.deviceZone {
-  font-weight: 200;
-}
-.collapseToggleButton {
-  @include button(transparent, black, 0.5rem);
-}
-.collapseToggleButton {
-  font-size: 1.5rem;
-  margin-left: 0.5rem;
-}
-.collapseCard {
-  background-color: rgba($primary, 0.25);
-  border-radius: 1rem;
-  margin-top: 0.5rem;
-  padding: 1rem;
-  color: $primary;
-}
-.loadingMaskMessageBox {
-  font-size: 1.25rem;
+  color: $primary_color;
 }
 .errorMaskMessageBox {
-  color: $danger;
+  color: $danger_color;
 }

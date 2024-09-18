@@ -1,0 +1,125 @@
+.button {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  &:disabled {
+    filter: opacity(0.5) !important;
+  }
+}
+
+@mixin normal-button($color, $background-color) {
+  color: $color;
+  background: linear-gradient(
+    270deg,
+    rgba($background-color, 0.9) 0%,
+    $background-color 100%
+  );
+  padding: 0.4rem + 0.125rem 0.8rem + 0.125rem;
+
+  transition: filter 200ms ease;
+
+  &:hover {
+    filter: brightness(0.85);
+  }
+  &:active {
+    filter: brightness(0.7);
+  }
+}
+.normal {
+  &.primary {
+    @include normal-button($bg_secondary_color, $primary_color);
+  }
+  &.secondary {
+    @include normal-button($bg_secondary_color, $secondary_color);
+  }
+  &.danger {
+    @include normal-button($bg_secondary_color, $danger_color);
+  }
+  &.gray {
+    @include normal-button($bg_secondary_color, $gray_color);
+  }
+  &.text_primary {
+    @include normal-button($bg_secondary_color, $text_primary_color);
+  }
+  &.text_secondary {
+    @include normal-button($bg_secondary_color, $text_secondary_color);
+  }
+  &.bg_secondary {
+    @include normal-button($text_secondary_color, $bg_secondary_color);
+  }
+}
+
+@mixin outline-button($color) {
+  color: $color;
+  background-color: transparent;
+  border: 0.125rem solid $color;
+  transition: filter 200ms ease, background-color 200ms ease, color 200ms ease;
+
+  &:hover {
+    background-color: $color;
+    color: $bg_secondary_color;
+  }
+  &:active {
+    filter: brightness(0.8);
+  }
+}
+.outline {
+  &.primary {
+    @include outline-button($primary_color);
+  }
+  &.secondary {
+    @include outline-button($secondary_color);
+  }
+  &.danger {
+    @include outline-button($danger_color);
+  }
+  &.gray {
+    @include outline-button($gray_color);
+  }
+  &.text_primary {
+    @include outline-button($text_primary_color);
+  }
+  &.text_secondary {
+    @include outline-button($text_secondary_color);
+  }
+  &.bg_secondary {
+    @include outline-button($bg_secondary_color);
+  }
+}
+
+@mixin transparent-button($color) {
+  color: $color;
+  background-color: transparent;
+  transition: filter 200ms ease;
+
+  &:hover {
+    filter: brightness(0.85);
+  }
+  &:active {
+    filter: brightness(0.7);
+  }
+}
+.transparent {
+  &.primary {
+    @include transparent-button($primary_color);
+  }
+  &.secondary {
+    @include transparent-button($secondary_color);
+  }
+  &.danger {
+    @include transparent-button($danger_color);
+  }
+  &.gray {
+    @include transparent-button($gray_color);
+  }
+  &.text_primary {
+    @include transparent-button($text_primary_color);
+  }
+  &.text_secondary {
+    @include transparent-button($text_secondary_color);
+  }
+  &.bg_secondary {
+    @include transparent-button($bg_secondary_color);
+  }
+}

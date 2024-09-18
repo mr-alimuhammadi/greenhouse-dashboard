@@ -1,18 +1,32 @@
-.title {
-  margin-bottom: 0.75rem;
-}
-.newsSlider {
-  margin-bottom: 2rem;
-}
-.skeleton {
-  margin: 0.5rem 0;
-}
-.failed {
-  margin: 0.5rem 0;
-  height: 5rem;
+.devicesMonitor {
+  background-color: $bg_secondary_color;
+  padding: 1rem;
+  margin-top: 1rem;
   border-radius: 1rem;
-  background-color: rgba($danger, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+  .deviceSelectContainer {
+    display: none;
+  }
+  @media screen and (max-width: 576px) {
+    .deviceSlider {
+      display: none;
+    }
+    .deviceSelectContainer {
+      display: block;
+    }
+  }
+}
+.selectContainer {
+  z-index: 3;
+}
+.selectControl {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
+  border-color: #e1e1e1 !important;
+  &:hover {
+    border-color: rgba(#999, 0.5) !important;
+  }
+}
+.selectControl,
+.selectMenu {
+  font-size: 1.125rem;
 }

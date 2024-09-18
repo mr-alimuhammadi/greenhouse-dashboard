@@ -1,0 +1,23 @@
+.card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: $primary;
+  border-radius: 1rem;
+  color: $light;
+  flex-grow: 1;
+}
+
+.left {
+  margin: 0.5rem 1rem;
+  i {
+    font-size: 4rem;
+  }
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  text-align: center;
+}
